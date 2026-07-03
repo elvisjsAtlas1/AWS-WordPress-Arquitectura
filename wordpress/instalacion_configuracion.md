@@ -53,3 +53,13 @@ Para garantizar la escalabilidad de la plataforma y evitar la saturación de los
 
 *Evidencia visual: Revisar el archivo `s3_bucket_creado.png` en la carpeta de capturas.*
 
+
+### 5.1 Integración de S3 con WordPress y Roles IAM
+Para completar el almacenamiento en la nube, se vinculó el servidor web con el bucket S3 previamente creado:
+
+* **Autenticación Segura (Roles de IAM):** Aplicando las buenas prácticas de AWS, se evitó el uso de credenciales estáticas (Access Keys). Se asignó el rol `LabInstanceProfile` directamente a la instancia EC2 para proveer una conexión nativa y segura hacia S3.
+* **Configuración de Políticas:** Se aplicó una política de bucket en JSON (`s3:GetObject`) para permitir la lectura pública y global de los recursos multimedia.
+* **Interceptación Multimedia:** Se instaló el plugin *WP Offload Media Lite* y se configuraron las dependencias del servidor web (`php-gd`, `php-xml`). Con esto, los archivos subidos al CMS migran automáticamente a la nube, reescribiendo las URLs locales hacia el dominio de Amazon S3.
+
+*Evidencia visual: El archivo `wp_s3_imagen_subida.png` en la carpeta de capturas certifica que las URLs de las imágenes apuntan correctamente a la infraestructura de S3.*
+
