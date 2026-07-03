@@ -44,3 +44,12 @@ Se realizó la configuración y vinculación exitosa entre la capa de aplicació
 
 *Evidencia visual: Revisar los archivos `wp_conexion_exitosa.png` y `wp_panel_admin.png` en la carpeta de capturas.*
 
+
+## 5. Capa de Almacenamiento Persistente (Amazon S3)
+Para garantizar la escalabilidad de la plataforma y evitar la saturación de los discos locales de la capa de cómputo, se desacopló el almacenamiento multimedia:
+* **Bucket Creado:** `comercialnova-media-[tu-apellido]` (reemplaza por el nombre real de tu bucket).
+* **Región:** `us-east-1` (Norte de Virginia), garantizando baja latencia con la capa web y de datos.
+* **Políticas de Acceso:** Se deshabilitó el bloqueo de acceso público general, permitiendo la lectura de objetos multimedia para que las imágenes se rendericen correctamente en el navegador de los usuarios finales de WordPress.
+
+*Evidencia visual: Revisar el archivo `s3_bucket_creado.png` en la carpeta de capturas.*
+
