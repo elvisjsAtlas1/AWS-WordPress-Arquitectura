@@ -63,3 +63,22 @@ Para completar el almacenamiento en la nube, se vinculó el servidor web con el 
 
 *Evidencia visual: El archivo `wp_s3_imagen_subida.png` en la carpeta de capturas certifica que las URLs de las imágenes apuntan correctamente a la infraestructura de S3.*
 
+
+### 5.2 Estrategia de Respaldo y Alta Disponibilidad
+Para garantizar la continuidad del negocio y la resiliencia de la infraestructura ante fallos, se ejecutó el siguiente plan:
+
+* **Creación de Imagen (AMI):** Se generó una "Golden Image" (`ComercialNova-WP-GoldenImage`) del servidor web, la cual encapsula la configuración de WordPress, los módulos de PHP, la conectividad con RDS y la integración con el bucket S3.
+* **Respaldo de Estado:** Este procedimiento permite realizar despliegues rápidos de nuevos nodos web ante un aumento de tráfico o ante la falla de la instancia original, cumpliendo con los estándares de alta disponibilidad.
+
+*Evidencia visual: El archivo `ami_disponible.png` en la carpeta de evidencias confirma que la imagen base está lista para su despliegue.*
+
+
+### 5.3 Escalabilidad y Alta Disponibilidad (Auto Scaling)
+Para garantizar la resiliencia y el rendimiento de la plataforma, se configuró un grupo de Auto Scaling:
+
+* **Arquitectura de Alta Disponibilidad:** Se desplegaron dos instancias como capacidad deseada mínima en subredes públicas de diferentes zonas de disponibilidad (`us-east-1a` y `us-east-1b`).
+* **Balanceo de Carga:** Se integró un *Application Load Balancer* (ALB) para distribuir el tráfico de manera eficiente entre los nodos web, proporcionando un único punto de acceso DNS.
+* **Escalamiento Automático:** Se implementó una política de seguimiento de destino con un umbral del 50% de uso de CPU, permitiendo que el grupo escale dinámicamente hasta un máximo de 4 instancias durante picos de demanda.
+* **Mantenimiento Inteligente:** Se configuró la política "Lance antes de terminar" para asegurar que los reemplazos de instancias no interrumpan la disponibilidad del servicio.
+
+*Evidencia visual: El archivo `asg_funcional.png` certifica la configuración de políticas de escalado y mantenimiento orientadas a la disponibilidad.*
